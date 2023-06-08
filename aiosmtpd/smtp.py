@@ -1281,6 +1281,13 @@ class SMTP(asyncio.StreamReaderProtocol):
                     '552 Error: message size exceeds fixed maximum message '
                     'size')
                 return
+        # Alchemer fix  ----------------------------------------------------------------------------
+        log.debug('Remaining MAIL params')
+        log.debug(params)
+        log.debug('Popping AUTH')
+        params.pop('AUTH', None)
+        log.debug(params)
+        # -------------------------------------------------------------------------------------------
         if len(params) > 0:
             await self.push(
                 '555 MAIL FROM parameters not recognized or not implemented')
